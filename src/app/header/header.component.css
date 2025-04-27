@@ -1,0 +1,40 @@
+.header-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    background:  #131212
+  }
+  
+  .header-left {
+    color:rgb(225, 225, 225);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-left a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+  }
+  
+  .logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-right button {
+    margin-left: 10px;
+  }
+
+  
