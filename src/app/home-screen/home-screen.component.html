@@ -1,78 +1,45 @@
 <div class="container">
   <div class="content">
     <div>
-      <!-- Header -->
       <h1 class="title">Secret Stories</h1>
       <p class="tagline">Unlock hidden worlds. Share your untold tales.</p>
     </div>
 
-    <!-- Sneak Peek -->
     <div class="preview">
       <h3>Discover hidden stories from people like you...</h3>
-
       <ul>
-        <li>
-          <span class="preview-title">Story 1:</span> The Night I Never
-          Forgot...
-        </li>
-        <li>
-          <span class="preview-title">Story 2:</span> Confession from a Hidden
-          Heart...
-        </li>
+        <li><span class="preview-title">Story 1:</span> The Night I Never Forgot...</li>
+        <li><span class="preview-title">Story 2:</span> Confession from a Hidden Heart...</li>
       </ul>
     </div>
   </div>
-  <!-- Toggle between Login and Signup -->
-  <div class="form-page">
-    <!-- Login Form -->
-    <div class="form-container">
-      <h3>Login</h3>
-      <form (submit)="submitForm()">
-        <input
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="email"
-          name="email"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          [(ngModel)]="password"
-          name="password"
-          required
-        />
-        <button type="submit">Login</button>    
-      </form>
-    </div>
 
-    <!-- Sign Up Form -->
-    <!-- <div *ngIf="!isLogin" class="form-container">
-      <h3>Sign Up</h3>
-      <form (submit)="submitForm()">
-        <input
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="email"
-          name="email"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          [(ngModel)]="password"
-          name="password"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          [(ngModel)]="confirmPassword"
-          name="confirmPassword"
-          required
-        />
-        <button type="submit">Sign Up</button>
-      </form> 
-    </div>-->
+  <div class="form-page">
+    <form (ngSubmit)="submitForm()">
+      <div class="form-header">
+        <h3 *ngIf ="isLogin; else signupTitle">Login Here</h3>
+        <ng-template #signupTitle><h3>Happy to Have You</h3></ng-template>
+      </div>
+
+      <input type="text" placeholder="Email" [(ngModel)]="email" name="email">
+
+      <input *ngIf="!isLogin" type="text" placeholder="Mobile No" [(ngModel)]="mobile" name="mobile">
+
+      <input type="password" placeholder="Password" [(ngModel)]="password" name="password">
+
+      <button type="submit">
+        {{ isLogin ? 'Log In' : 'Sign Up' }}
+      </button>
+
+      <button type="button" (click)="isLogin ? authService.loginWithGoogle() : authService.signupWithGoogle()">
+        {{ isLogin ? 'Log In Using Google' : 'Sign Up Using Google' }}
+      </button>
+
+      <div class="social">
+        <button type="button" (click)="toggleForm()">
+          {{ isLogin ? 'Create New Account' : 'Already Have Account' }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>
