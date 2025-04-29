@@ -27,7 +27,11 @@ export class HomeScreenComponent {
   submitForm() {
     if (this.isLogin) {
       // Login API call
-      this.authService.login(this.email, this.password).subscribe({
+      let payload = {
+        email: this.email,
+        password: this.password
+      }
+      this.authService.login(payload).subscribe({
         next: (res) => {
           console.log('Login Success:', res);
           // maybe redirect ya token save kar lena
@@ -37,8 +41,13 @@ export class HomeScreenComponent {
         }
       });
     } else {
+      let payload = {
+        email: this.email,
+        mobile: this.mobile,
+        password: this.password
+      }
       // Signup API call
-      this.authService.signup(this.email, this.mobile, this.password).subscribe({
+      this.authService.signup(payload).subscribe({
         next: (res) => {
           console.log('Signup Success:', res);
           this.isLogin = true; // After signup, move back to Login

@@ -7,16 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private baseUrl = 'https://your-api-url.com/api/auth'; // apna base URL daal yahan
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, { email, password });
-  }
+  login(payload:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, payload);
+  } 
 
-  signup(email: string, mobile: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/signup`, { email, mobile, password });
+
+  signup(payload:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/signup`, payload);
   } 
 
   loginWithGoogle() {
