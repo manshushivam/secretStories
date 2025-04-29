@@ -1,37 +1,61 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';  // Import FormsModule
+import { AuthService } from '../service/auth.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home-screen',
   templateUrl: './home-screen.component.html',
   styleUrls: ['./home-screen.component.css'],
   standalone: true,
-  imports: [FormsModule],  // Include FormsModule here
+  imports: [FormsModule,CommonModule],  // Include FormsModule here
 })
 export class HomeScreenComponent {
-  isLogin = true;  // True means Login form is shown, false means Sign Up form
+  isLogin = true;
 
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
+  email = '';
+  password = '';
+  mobile = '';
 
-  // Toggle between Login and Sign Up form
-  toggleForm(formType: 'login' | 'signup') {
-    this.isLogin = formType === 'login';
+  constructor(public authService: AuthService) {}
+
+  toggleForm() {
+    this.isLogin = !this.isLogin;
   }
 
-  // Handle form submission
   submitForm() {
     if (this.isLogin) {
-      // Handle login logic
-      console.log('Logging in with:', this.email, this.password);
-    } else {
-      // Handle sign-up logic
-      if (this.password === this.confirmPassword) {
-        console.log('Signing up with:', this.email, this.password);
-      } else {
-        console.error('Passwords do not match!');
+      // Login API call
+      let payload = {
+        email: this.email,
+        password: this.password
       }
+      this.authService.login(payload).subscribe({
+        next: (res) => {
+          console.log('Login Success:', res);
+          // maybe redirect ya token save kar lena
+        },
+        error: (err) => {
+          console.error('Login Failed:', err);
+        }
+      });
+    } else {
+      let payload = {
+        email: this.email,
+        mobile: this.mobile,
+        password: this.password
+      }
+      // Signup API call
+      this.authService.signup(payload).subscribe({
+        next: (res) => {
+          console.log('Signup Success:', res);
+          this.isLogin = true; // After signup, move back to Login
+        },
+        error: (err) => {
+          console.error('Signup Failed:', err);
+        }
+      });
     }
   }
 }
